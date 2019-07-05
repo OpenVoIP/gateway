@@ -139,15 +139,15 @@ export default {
   methods: {
     // 点击拨号
     clickCall() {
-      // if (isWebRTC()) {
-      //   return this.$EventBus.$emit("callNumber", {
-      //     exten: this.currentSelect.extensionNumber
-      //   });
-      // }
-
-      clickCall({
-        src: `${localStorage.getItem("exten_extension")}`,
-        dst: this.currentSelect.extensionNumber
+      fetch(`${window.location.protocol}//${window.location.protocol}:8000/coocenter-api/plugin-asterisk/extension/click-number`,{
+        method: 'PUT',
+        headers: api.headers(),
+        body: JSON.stringify({
+            src: "801",
+            dst: this.currentSelect.extension
+        })
+      }).then(res => res.json()).then(() =>{
+        alert("调用成功");
       });
     },
 
