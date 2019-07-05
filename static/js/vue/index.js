@@ -9,7 +9,7 @@ import VueSocketIO from 'vue-socket.io';
 Vue.use(
   new VueSocketIO({
     debug: false,
-    connection: `${window.location.protocol}//${window.location.protocol}:8000`,
+    connection: `${window.location.protocol}//${window.location.hostname}:8000`,
     options: {
       path: '/socket.io',
       // query: 'token=' + `Bearer ${store.getters.token}`

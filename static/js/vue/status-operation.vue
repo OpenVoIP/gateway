@@ -139,7 +139,7 @@ export default {
   methods: {
     // 点击拨号
     clickCall() {
-      fetch(`${window.location.protocol}//${window.location.protocol}:8000/coocenter-api/plugin-asterisk/extension/click-number`,{
+      fetch(`${window.location.protocol}//${window.location.hostname}:8000/coocenter-api/plugin-asterisk/extension/click-number`,{
         method: 'PUT',
         headers: api.headers(),
         body: JSON.stringify({
