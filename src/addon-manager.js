@@ -678,33 +678,33 @@ class AddonManager extends EventEmitter {
     //   `rm -f SHA256SUMS && sha256sum file1 file2 ... > SHA256SUMS`
     // To verify, use:
     //   `sha256sum --check SHA256SUMS`
-    if (manifest.files.includes('SHA256SUMS')) {
-      const sumsFile = path.join(addonPath, 'SHA256SUMS');
-      try {
-        const data = fs.readFileSync(sumsFile, 'utf8');
-        const lines = data.trim().split(/\r?\n/);
-        for (const line of lines) {
-          const checksum = line.slice(0, 64);
-          let filename = line.slice(64).trimLeft();
+    // if (manifest.files.includes('SHA256SUMS')) {
+    //   const sumsFile = path.join(addonPath, 'SHA256SUMS');
+    //   try {
+    //     const data = fs.readFileSync(sumsFile, 'utf8');
+    //     const lines = data.trim().split(/\r?\n/);
+    //     for (const line of lines) {
+    //       const checksum = line.slice(0, 64);
+    //       let filename = line.slice(64).trimLeft();
 
-          if (filename.startsWith('*')) {
-            filename = filename.substring(1);
-          }
+    //       if (filename.startsWith('*')) {
+    //         filename = filename.substring(1);
+    //       }
 
-          if (Utils.hashFile(path.join(addonPath, filename)) !== checksum) {
-            const err =
-              `Checksum failed in package ${manifest.name}: ${filename}`;
-            console.error(err);
-            return Promise.reject(err);
-          }
-        }
-      } catch (e) {
-        const err =
-          `Failed to read SHA256SUMS for package ${manifest.name}: ${e}`;
-        console.error(err);
-        return Promise.reject(err);
-      }
-    }
+    //       if (Utils.hashFile(path.join(addonPath, filename)) !== checksum) {
+    //         const err =
+    //           `Checksum failed in package ${manifest.name}: ${filename}`;
+    //         console.error(err);
+    //         return Promise.reject(err);
+    //       }
+    //     }
+    //   } catch (e) {
+    //     const err =
+    //       `Failed to read SHA256SUMS for package ${manifest.name}: ${e}`;
+    //     console.error(err);
+    //     return Promise.reject(err);
+    //   }
+    // }
 
     // Verify that important fields exist in the manifest
     const err = this.validateManifest(manifest);
@@ -832,7 +832,7 @@ class AddonManager extends EventEmitter {
     if (process.env.NODE_ENV !== 'test') {
       // Check for add-ons in 10 seconds (allow add-ons to load first).
       setTimeout(() => {
-        this.updateAddons();
+        // this.updateAddons();
 
         // Check every day.
         const delay = 24 * 60 * 60 * 1000;

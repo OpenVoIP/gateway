@@ -56,6 +56,10 @@
   background-image: url('../optimized-images/things-icon.png');
 }
 
+#main-menu #speakers-menu-item {
+  background-image: url('../optimized-images/things-icon.png');
+}
+
 #main-menu #settings-menu-item {
   background-image: url('../optimized-images/settings-icon.png');
 }

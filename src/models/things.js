@@ -27,6 +27,9 @@ const Things = {
    */
   things: new Map(),
 
+  // things 中包含 speaker 设备
+  speakers: new Map(),
+
   /**
    * A collection of open websockets listening for new things.
    */
@@ -137,6 +140,65 @@ const Things = {
       }
       return descriptions;
     });
+  },
+  /**
+   * 从数据库获取特定 Speaker 设备, 实现设备分组控制
+   * @param {*} hrefs
+   * @param {*} reqHost
+   * @param {*} reqSecure
+   */
+  getSpeakerListThingDescriptions: function(hrefs, reqHost, reqSecure) {
+    return new Promise((function(resolve, reject) {
+      this.db.all(
+        'SELECT id, description FROM things',
+        ((err, rows) => {
+          if (err) {
+            reject(err);
+          } else {
+            const things = [];
+            for (const row of rows) {
+              const thing = JSON.parse(row.description);
+              thing.id = row.id;
+              things.push(thing);
+            }
+            resolve(things);
+          }
+        }));
+    }).bind(this))
+      .then((things) => {
+        this.speakers = new Map();
+        things.forEach((thing, index) => {
+          // 只处理 Speaker 设备
+          const thingValue = new Thing(thing.id, thing);
+          // This should only happen on the first migration.
+          if (!thing.hasOwnProperty('layoutIndex')) {
+            thing.layoutIndex = index;
+          }
+
+          if (thingValue.type === 'Speaker') {
+            this.speakers.set(thing.id, thingValue);
+          }
+        });
+
+        return this.speakers;
+      }).then((things) => {
+        const listThings = [];
+        for (const href of hrefs) {
+          things.forEach((thing) => {
+            if (thing.href === href) {
+              listThings.push(thing);
+            }
+          });
+        }
+        return listThings;
+      })
+      .then((listThings) => {
+        const descriptions = [];
+        for (const thing of listThings) {
+          descriptions.push(thing.getDescription(reqHost, reqSecure));
+        }
+        return descriptions;
+      });
   },
 
   /**

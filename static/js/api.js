@@ -21,6 +21,7 @@ const API = {
   headers() {
     const headers = {
       Accept: 'application/json',
+      'Content-Type': 'application/json',
     };
     if (this.jwt) {
       headers.Authorization = `Bearer ${this.jwt}`;

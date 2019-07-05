@@ -12,6 +12,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const {VueLoaderPlugin} = require('vue-loader');
+
 const uuid = require('uuid/v1');
 
 const externals = {};
@@ -61,6 +63,7 @@ const webpackNode = {
 };
 
 const pluginsWeb = [
+  new VueLoaderPlugin(),
   new CopyWebpackPlugin([
     {
       from: 'static/**/*',
@@ -161,6 +164,13 @@ const webpackWeb = {
   },
   mode: 'development',
   target: 'web',
+  resolve: {
+    alias: {
+      '@': path.join(__dirname, './static/js/vue'),
+      vue$: 'vue/dist/vue.esm.js',
+    },
+    extensions: ['.vue', '.js'],
+  },
   optimization: {
     splitChunks: {
       cacheGroups: {
@@ -188,7 +198,8 @@ const webpackWeb = {
             loader: 'babel-loader',
             query: {
               babelrc: false,
-              sourceType: 'script',
+              // sourceType: 'script',
+              sourceType: 'module',
               presets: [
                 ['@babel/preset-env', {
                   modules: 'commonjs',
@@ -224,6 +235,18 @@ const webpackWeb = {
           },
         ],
       },
+      // {
+      //   test: /\.css$/,
+      //   include: path.resolve(__dirname, 'node_modules', 'element-ui'),
+      //   use: [
+      //     {
+      //       loader: 'css-loader',
+      //       options: {
+      //         sourceMap: true,
+      //       },
+      //     },
+      //   ],
+      // },
       {
         test: /\.css$/,
         include: path.resolve(__dirname, 'static'),
@@ -267,6 +290,28 @@ const webpackWeb = {
             },
           },
         ],
+      },
+      // {
+      //   test:
+      //     /(?!\/uploads\/floorplan)\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+      //   include: path.resolve(__dirname, 'node_modules', 'element-ui'),
+      //   use: [
+      //     {
+      //       loader: 'url-loader',
+      //       options: {
+      //         limit: 8000,
+      //         fallback: 'file-loader',
+      //         publicPath: '/images',
+      //         outputPath: 'images',
+      //       },
+      //     },
+      //   ],
+      // },
+      {
+        test: /\.vue$/,
+        use: {
+          loader: 'vue-loader',
+        },
       },
     ],
   },

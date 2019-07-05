@@ -13,6 +13,7 @@ const path = require('path');
 // Web server routes
 exports.USERS_PATH = '/users';
 exports.THINGS_PATH = '/things';
+exports.SPEAKERS_PATH = '/speakers';
 exports.PROPERTIES_PATH = '/properties';
 exports.NEW_THINGS_PATH = '/new_things';
 exports.ADAPTERS_PATH = '/adapters';

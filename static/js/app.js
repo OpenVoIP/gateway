@@ -18,6 +18,8 @@ let GatewayModel;
 // eslint-disable-next-line prefer-const
 let ThingsScreen;
 // eslint-disable-next-line prefer-const
+let SpeakerScreen;
+// eslint-disable-next-line prefer-const
 let AddThingScreen;
 // eslint-disable-next-line prefer-const
 let Menu;
@@ -81,6 +83,7 @@ const App = {
     ContextMenu.init();
     AssistantScreen.init();
     ThingsScreen.init();
+    SpeakerScreen.init();
     SettingsScreen.init();
     FloorplanScreen.init();
 
@@ -95,6 +98,7 @@ const App = {
 
     this.views = [];
     this.views.things = document.getElementById('things-view');
+    this.views.speakers = document.getElementById('speakers-view');
     this.views.floorplan = document.getElementById('floorplan-view');
     this.views.settings = document.getElementById('settings-view');
     this.views.rules = document.getElementById('rules-view');
@@ -217,6 +221,15 @@ const App = {
                       events,
                       context.querystring);
     this.selectView('things');
+  },
+
+  showSpeakers: function(context) {
+    const events = context.pathname.split('/').pop() === 'events';
+    ThingsScreen.show(context.params.thingId || null,
+                      context.params.actionName || null,
+                      events,
+                      context.querystring);
+    this.selectView('speakers');
   },
 
   showSettings: function(context) {
@@ -379,6 +392,7 @@ API = require('./api');
 AssistantScreen = require('./views/assistant');
 GatewayModel = require('./models/gateway-model');
 ThingsScreen = require('./views/things');
+SpeakerScreen = require('./views/speakers');
 AddThingScreen = require('./views/add-thing');
 Menu = require('./views/menu');
 ContextMenu = require('./context-menu');

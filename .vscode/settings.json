@@ -6,5 +6,8 @@
   "eslint.options": {
     "configFile": ".eslintrc.js"
   },
-  "eslint.autoFixOnSave": true
+  "eslint.autoFixOnSave": true,
+  "cSpell.words": [
+    "initialise"
+  ]
 }

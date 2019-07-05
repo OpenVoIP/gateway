@@ -139,6 +139,8 @@ const Router = {
     // Authenticated API routes
     app.use(API_PREFIX + Constants.THINGS_PATH, nocache, auth,
             require('./controllers/things_controller'));
+    app.use(API_PREFIX + Constants.SPEAKERS_PATH, nocache, auth,
+            require('./controllers/things_controller'));
     app.use(API_PREFIX + Constants.NEW_THINGS_PATH, nocache, auth,
             require('./controllers/new_things_controller'));
     app.use(API_PREFIX + Constants.ADAPTERS_PATH, nocache, auth,

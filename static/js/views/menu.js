@@ -26,6 +26,7 @@ const Menu = {
       document.getElementById('speech-wrapper'),
     ];
     this.items.things = [document.getElementById('things-menu-item')];
+    this.items.speakers = [document.getElementById('speakers-menu-item')];
     this.items.settings = [document.getElementById('settings-menu-item')];
     this.items.floorplan = [document.getElementById('floorplan-menu-item')];
     this.items.rules = [document.getElementById('rules-menu-item')];

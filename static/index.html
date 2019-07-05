@@ -11,6 +11,7 @@
     <link rel="manifest" href="/app.webmanifest">
     <link rel="icon" href="/optimized-images/icon.png" type="image/png" />
     <link rel="apple-touch-icon-precomposed" href="/optimized-images/icon.png" type="image/png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body class="hidden">
     <!-- Assistant View -->
@@ -45,6 +46,12 @@
       </div>
       <div id="things"></div>
       <button id="add-button" class="icon-button"></button>
+    </section>
+
+    <!-- Speakers View -->
+    <section data-view="speakers" id="speakers-view" class="hidden">
+      <div id="speakers-vue" style="width: 90%; height: 96%; margin-left: 100px;">
+      </div>
     </section>
 
     <!-- Floorplan View -->
@@ -544,6 +551,7 @@
       <ul>
         <li><a id="assistant-menu-item" href="/assistant" class="hidden" >Assistant</a></li>
         <li><a id="things-menu-item" href="/things" class="selected">Things</a></li>
+        <li><a id="speakers-menu-item" href="/speakers">广播</a></li>
         <li><a id="rules-menu-item" href="/rules">Rules</a></li>
         <li><a id="logs-menu-item" href="/logs">Logs</a></li>
         <li><a id="floorplan-menu-item" href="/floorplan">Floorplan</a></li>
