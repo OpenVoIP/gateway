@@ -149,7 +149,7 @@ const Things = {
    */
   getSpeakerListThingDescriptions: function(hrefs, reqHost, reqSecure) {
     return new Promise((function(resolve, reject) {
-      this.db.all(
+      Database.db.all(
         'SELECT id, description FROM things',
         ((err, rows) => {
           if (err) {

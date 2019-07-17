@@ -10,14 +10,8 @@
 
 'use strict';
 
-const Action = require('../models/action');
-const Actions = require('../models/actions');
-const ActionsController = require('./actions_controller');
 const AddonManager = require('../addon-manager');
-const Constants = require('../constants');
-const EventsController = require('./events_controller');
 const PromiseRouter = require('express-promise-router');
-const Settings = require('../models/settings');
 const Things = require('../models/things');
 
 const SpeakersController = PromiseRouter();
@@ -26,30 +20,10 @@ const SpeakersController = PromiseRouter();
  * 只显示 speaker 设备
  */
 SpeakersController.get('/', (request, response) => {
-  if (request.jwt.payload.role !== Constants.USER_TOKEN) {
-    if (!request.jwt.payload.scope) {
-      response.status(400).send('Token must contain scope');
-    } else {
-        // Get hrefs of things in scope
-        const paths = scope.split(' ');
-        const hrefs = new Array(0);
-        for (const path of paths) {
-          const parts = path.split(':');
-          hrefs.push(parts[0]);
-        }
-        Things.getListThingDescriptions(hrefs,
-                                        request.get('Host'),
-                                        request.secure)
-          .then((things) => {
-            response.status(200).json(things);
-          });
-    }
-  } else {
-    Things.getThingDescriptions(request.get('Host'), request.secure)
-      .then((things) => {
-        response.status(200).json(things);
-      });
-  }
+  Things.getSpeakerListThingDescriptions(request.get('Host'), request.secure)
+    .then((things) => {
+      response.status(200).json(things);
+    });
 });
 
 SpeakersController.patch('/', async (request, response) => {
