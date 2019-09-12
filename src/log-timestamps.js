@@ -28,6 +28,8 @@ const timestampFormat = winston.format.timestamp({
   format: 'YYYY-MM-DD HH:mm:ss.SSS',
 });
 
+Error.stackTraceLimit = Infinity;
+
 const logger = winston.createLogger({
   level: 'debug',
   transports: [
@@ -44,7 +46,28 @@ const logger = winston.createLogger({
             error: 'red',
           },
         }),
-        winston.format.printf((info) => info.message)
+        winston.format.printf((info) => {
+          const e = new Error();
+          const regex = /\((.*):(\d+):(\d+)\)$/;
+          const errors = e.stack.split('\n');
+          const stackInfos = [];
+          for (let index = 0; index < errors.length; index++) {
+            const info = errors[index];
+            if (info &&
+                !info.includes('log-timestamps.js') &&
+                info.includes('build/webpack:/src')) {
+              const match = regex.exec(errors[index]);
+              if (match && match.length >= 3) {
+                stackInfos.push(`${match[1].replace('/build/webpack:/src', '/src')}:${match[2]}:${match[3]} \n`);
+              }
+              break;
+            }
+          }
+          if (stackInfos.length > 0) {
+            return `${stackInfos.join('\n')} ${info.message}`;
+          }
+          return info.message;
+        })
       ),
     }),
     new DailyRotateFile({

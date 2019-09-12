@@ -6,7 +6,7 @@
         "type": "node",
         "request": "launch",
         "cwd": "${workspaceRoot}",
-        "timeout": 120000,
+        "timeout": 40000,
         "runtimeExecutable": "npm",
         "runtimeArgs": [
             "run-script", "debug-ide"

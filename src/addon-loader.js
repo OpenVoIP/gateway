@@ -102,6 +102,7 @@ async function loadAddon(addonPath, verbose) {
 
         if (config.get('ipc.protocol') !== 'inproc') {
           pluginClient.on('unloaded', () => {
+            console.log('process exit');
             sleep(500).then(() => process.exit(0));
           });
         }

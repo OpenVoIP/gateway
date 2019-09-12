@@ -638,6 +638,7 @@ class Thing {
    * @param {boolean} connected - Whether or not the thing is connected
    */
   setConnected(connected) {
+    console.log('setConnected', connected);
     this.connected = connected;
     this.emitter.emit(Constants.CONNECTED, connected);
   }

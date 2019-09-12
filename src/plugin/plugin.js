@@ -25,7 +25,7 @@ const readline = require('readline');
 const spawn = require('child_process').spawn;
 const UserProfile = require('../user-profile');
 
-const DEBUG = false;
+const DEBUG = true;
 
 class Plugin {
 
@@ -38,6 +38,7 @@ class Plugin {
     this.notifiers = new Map();
     this.ipcBaseAddr = `gateway.plugin.${this.pluginId}`;
 
+    console.log('ipcBaseAddr', this.ipcBaseAddr);
     this.ipcSocket = new IpcSocket('AdapterProxy', 'pair',
                                    this.ipcBaseAddr,
                                    this.onMsg.bind(this));
@@ -411,6 +412,7 @@ class Plugin {
         break;
 
       case Constants.CONNECTED:
+        console.log('Constants.CONNECTED', msg);
         device = adapter.getDevice(msg.data.deviceId);
         if (device) {
           device.connectedNotify(msg.data.connected);

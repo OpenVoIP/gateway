@@ -15,7 +15,7 @@ const config = require('config');
 const Constants = require('../constants');
 const EventEmitter = require('events').EventEmitter;
 
-const DEBUG = false;
+const DEBUG = true;
 
 class AddonManagerProxy extends EventEmitter {
   constructor(pluginClient) {
@@ -46,6 +46,7 @@ class AddonManagerProxy extends EventEmitter {
     });
 
     this.on(Constants.CONNECTED, ({device, connected}) => {
+      console.log('Constants.CONNECTED', connected);
       DEBUG && console.log('AddonManagerProxy: Got',
                            Constants.CONNECTED, 'notification for',
                            device.title);
@@ -151,6 +152,7 @@ class AddonManagerProxy extends EventEmitter {
     // The first switch covers unload plugin.
     switch (msg.messageType) {
       case Constants.UNLOAD_PLUGIN:
+        console.log('unloadPlugin');
         this.unloadPlugin();
         return;
     }

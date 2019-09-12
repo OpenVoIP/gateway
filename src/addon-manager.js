@@ -228,6 +228,7 @@ class AddonManager extends EventEmitter {
    * @returns Returns the device with the indicated id.
    */
   getDevice(id) {
+    // console.log(id, this.devices);
     return this.devices[id];
   }
 
@@ -415,7 +416,9 @@ class AddonManager extends EventEmitter {
    * Called when the indicated device has been added to an adapter.
    */
   handleDeviceAdded(device) {
+    // console.log('addon-manager handleDeviceAdded', device);
     this.devices[device.id] = device;
+    console.log(this.devices);
     const thing = device.asThing();
 
     /**
@@ -760,6 +763,7 @@ class AddonManager extends EventEmitter {
 
     // Load the add-on
     console.log('Loading add-on:', manifest.name);
+    console.log('xxxx protocol', config.get('ipc.protocol'));
     if (config.get('ipc.protocol') === 'inproc') {
       // This is a special case where we load the adapter directly
       // into the gateway, but we use IPC comms to talk to the
@@ -800,7 +804,7 @@ class AddonManager extends EventEmitter {
     PluginClient = require('./plugin/plugin-client');
     PluginServer = require('./plugin/plugin-server');
 
-    this.pluginServer = new PluginServer(this, {verbose: false});
+    this.pluginServer = new PluginServer(this, {verbose: true});
 
     // Load the add-ons
 

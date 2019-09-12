@@ -60,6 +60,7 @@ class PluginServer extends EventEmitter {
    * plugins. Each plugin will get its own IPC channel once its registered.
    */
   onMsg(msg) {
+    console.log('plugin-server onMsg', msg);
     this.verbose &&
       console.log('PluginServer: Rcvd:', msg);
 
@@ -93,6 +94,7 @@ class PluginServer extends EventEmitter {
    * Loads a plugin by launching a separate process.
    */
   loadPlugin(pluginPath, manifest) {
+    console.log('loadPlugin');
     const plugin = this.registerPlugin(manifest.name);
     plugin.exec = manifest.moziot.exec;
     plugin.execPath = pluginPath;
@@ -106,6 +108,7 @@ class PluginServer extends EventEmitter {
    * via IPC.
    */
   registerPlugin(pluginId) {
+    console.log('registerPlugin', pluginId);
     let plugin = this.plugins.get(pluginId);
     if (plugin) {
       // This is a plugin that we already know about.

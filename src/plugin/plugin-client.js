@@ -41,6 +41,7 @@ class PluginClient extends EventEmitter {
       // Now that we're registered with the server, open the plugin
       // specific IPC channel with the server.
       this.pluginIpcBaseAddr = msg.data.ipcBaseAddr;
+      console.log('pluginIpcBaseAddr', this.pluginIpcBaseAddr);
       this.pluginIpcSocket =
         new IpcSocket('PluginClient', 'pair',
                       this.pluginIpcBaseAddr,
@@ -96,6 +97,7 @@ class PluginClient extends EventEmitter {
   }
 
   unload() {
+    console.log('plugin-client', 'unload');
     this.pluginIpcSocket.close();
     this.managerIpcSocket.close();
     this.emit('unloaded', {});
